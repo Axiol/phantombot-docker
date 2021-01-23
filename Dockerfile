@@ -29,6 +29,7 @@ COPY wrapper.sh /wrapper.sh
 RUN chmod a+x /wrapper.sh
 
 # Run
+EXPOSE 25000
 CMD /wrapper.sh
 
 
