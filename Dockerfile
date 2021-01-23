@@ -1,6 +1,6 @@
 # Base docker image
-FROM openjdk:11-jre-slim
-LABEL maintainer "Daevien <github@daevien.com>"
+FROM openjdk:11-jre-slim-stretch
+LABEL maintainer "Axiol <contact@arnaud.ninja>"
 
 # environment variables
 ARG PV=3.4.0
