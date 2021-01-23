@@ -1,10 +1,9 @@
-Originally forked from https://github.com/SleepyMario/phantombot-docker and fixed to run launch-service.sh instead of launch.sh to fix console spam.
-Modified greatly to work on 3.2.0 version changes. Wrapper.sh is based on code from https://github.com/aldovc/phantombot
+Originally forked from https://github.com/daevien/phantombot-docker so it can run on ARM processors.
 
 First time run as interactive if you have no existing config:
 
 ```
-docker run -it -v /realpath:/phantombot/config -v /etc/localtime:/etc/localtime:ro --net=host daevien/phantombot
+docker run -it --name phantombot -v /PATH/TO/CONFIG:/phantombot/config -v /PATH/TO/BACKUP:/backup -v /etc/localtime:/etc/localtime:ro -p 25000:25000 axiol/phantombot:latest
 ```
 
 Example docker-compose.yml once a config is supplied:
@@ -13,10 +12,11 @@ Example docker-compose.yml once a config is supplied:
 version: "3.7"
 
 services:
-    phantombot-ghostofsilverhand:
-      container_name: ghostofsilverhand
+    phantombot:
+      container_name: phantombot
       volumes:
-        - '/docker/pb/ghostofsilverhand:/phantombot/config'
+        - '/PATH/TO/CONFIG:/phantombot/config'
+	- '/PATH/TO/BACKUP:/backup'
         - '/etc/localtime:/etc/localtime:ro'
       environment:
         - APIOAUTH=data_goes_here
@@ -40,7 +40,7 @@ services:
         - 25000:25000
         - 25003:25003
         - 25004:25004  
-      image: 'daevien/phantombot'
+      image: 'axiol/phantombot'
 ```      
       
 Old info follows, this is not current. Will work on updating it.
@@ -67,11 +67,12 @@ Old info follows, this is not current. Will work on updating it.
 * Finally open ports 25000-25004 of your firewall.
 ```sh
 docker run -it \ 
-	-v /PATH/TO/BOT:/phantombot/config \
+	--name phantombot \
+	-v /PATH/TO/CONFIG:/phantombot/config \
 	-v /PATH/TO/BACKUP/:/backup \
 	-v /etc/localtime:/etc/localtime:ro \
-	--net=host \
-	daevien/phantombot
+	-p 25000:25000 \
+	axiol/phantombot
 ```
 (Personally, I use /DOCKER_ROOT/phantombot as the /PATH/TO/BOT, the original source of this docker uses specific mapping to files but I've changed it to map the whole directory as I'm intending to add in some customization.
 
